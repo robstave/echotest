@@ -11,10 +11,8 @@ import (
 
 // GetUsers gets all users
 func GetUsers(c echo.Context) error {
-	//user := m.NewUser("rstave", "rob", "stave", 34)
 
 	users := m.GetUsers()
-	//	var err error
 	return c.JSON(http.StatusCreated, users)
 }
 
@@ -24,6 +22,5 @@ func GetUser(c echo.Context) error {
 
 	i, _ := strconv.Atoi(id)
 	users := m.GetUser(i)
-	//	var err error
 	return c.JSON(http.StatusCreated, users)
 }

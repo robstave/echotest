@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// RootCommand checks the cli
 func RootCommand() *cobra.Command {
 	rootCmd := cobra.Command{
 		Use: "example",
@@ -24,8 +25,7 @@ func run(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal("Failed to load config: " + err.Error())
 	}
-	fmt.Println("ppppppppp")
 
-	fmt.Println(config.Port)
+	fmt.Println("Running on port:", config.Port)
 	gw.RunEcho(config.Port)
 }

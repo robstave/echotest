@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"echotest/controllers"
+	mw "echotest/middlewares"
 	"net/http"
 	"strconv"
 
@@ -25,8 +26,22 @@ func RunEcho(port int64) {
 		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
 	}))
 
+	//-------------------
+	// Custom middleware
+	//-------------------
+	// Stats
+	s := mw.NewStats()
+	e.Use(s.Process)
+	e.GET("/stats", s.Handle) // Endpoint to get stats
+
+	e.File("/", "public/index.html")
+	e.Use(mw.ServerHeader)
+
+	e.Use(mw.SetUser)
+	e.Use(mw.PrintUser)
+
 	// Route => handler
-	e.GET("/", func(c echo.Context) error {
+	e.GET("/hello", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!\n")
 	})
 
